@@ -14,12 +14,15 @@ class Utility
         $errors = json_decode($errors);
         $response = '';
 
-        if ($errors)
-        {
-            if (is_array($errors->message))
-            {
+        if ($errors) {
+            if (!empty($errors->message) && is_array($errors->message)) {
                 $error = end($errors->message);
                 $response = trim($error->description);
+            } else if (is_object($errors)) {
+                $error = $errors->errorCode ?: 'unknown';
+                $response = trim($errors->errorDescription ?: 'unknown');
+            } else if (is_string($errors)) {
+                $response = trim($errors);
             }
         }
 
@@ -28,8 +31,7 @@ class Utility
 
     public static function getOption($options, $option, $default = null)
     {
-        if (array_key_exists($option, $options))
-        {
+        if (array_key_exists($option, $options)) {
             return $options[$option];
         }
 
@@ -41,7 +43,7 @@ class Utility
         $models = [
             'CardTransaction' => 'transactions',
             'Report' => 'report',
-            'Refund' => 'transactions/'. $model_id .'/refund',
+            'Refund' => 'transactions/' . $model_id . '/refund',
             'Plan' => 'recurring/plans',
             'Subscription' => 'recurring/subscriptions',
             'SubscriptionCharge' => 'recurring/subscriptions/charges',
@@ -55,13 +57,11 @@ class Utility
     public static function setupModel($model, $data, $is_collection = false, $target_parameter = null)
     {
         $data = self::objectToArray($data);
-        $class_path = '\tdanielcox\Bluesnap\Models\\'. $model;
+        $class_path = '\tdanielcox\Bluesnap\Models\\' . $model;
 
-        if ($is_collection)
-        {
+        if ($is_collection) {
             $target = $target_parameter ? $data[$target_parameter] : $data;
-            $models = array_map(function($m) use ($class_path)
-            {
+            $models = array_map(function ($m) use ($class_path) {
                 return new $class_path($m);
             }, $target);
 
