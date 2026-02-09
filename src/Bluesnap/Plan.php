@@ -11,7 +11,7 @@ class Plan
     {
         return Adapter::get('Plan', $id, [
             'query_params' => $query_params,
-            'target_parameter' => 'plans'
+//            'target_parameter' => 'plans'
         ]);
     }
 
