@@ -64,8 +64,6 @@ class Utility
             $models = array_map(function ($m) use ($class_path) {
                 return new $class_path($m);
             }, $target);
-            if($model === 'Plan')
-            {var_dump($target_parameter, $data, $data[$target_parameter], $data['plans'],$target, $models);die();}
             return $models;
         }
 
