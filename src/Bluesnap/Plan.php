@@ -10,7 +10,8 @@ class Plan
     public static function get($id = null, $query_params = null)
     {
         return Adapter::get('Plan', $id, [
-            'query_params' => $query_params
+            'query_params' => $query_params,
+            'target_parameter'=>'plans'
         ]);
     }
 
