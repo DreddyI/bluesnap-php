@@ -44,8 +44,6 @@ class Api
 
         $id_string = $id ? '/' . $id : '';
         $request = new Request('GET', $endpoint . $id_string . $queryPart);
-//        $response = $client->request('GET', $endpoint . $id_string, $args);
-        var_dump($endpoint . $id_string . $queryPart);
         $response = $client->send($request, $args);
 
         if ($response->getStatusCode() === 200) {
