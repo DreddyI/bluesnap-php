@@ -38,11 +38,11 @@ class Api
         }
 
         $id_string = $id ? '/'. $id : '';
-        var_dump($args);die();
         $response = $client->get($endpoint . $id_string, $args);
 
         if ($response->getStatusCode() === 200)
         {
+            var_dump($response->getBody()->getContents());die();
             $data = json_decode($response->getBody()->getContents());
 
             return $data;
