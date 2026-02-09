@@ -59,13 +59,13 @@ class Utility
         $data = self::objectToArray($data);
         $class_path = '\tdanielcox\Bluesnap\Models\\' . $model;
 
-        if($model === 'Plan')
-        {var_dump($data);die();}
         if ($is_collection) {
             $target = $target_parameter ? $data[$target_parameter] : $data;
             $models = array_map(function ($m) use ($class_path) {
                 return new $class_path($m);
             }, $target);
+            if($model === 'Plan')
+            {var_dump($target, $models);die();}
 
             return $models;
         }
