@@ -39,7 +39,7 @@ class Api
             $args = ['query' => $query_params];
             $queryPart = '?' . implode('&', array_map(function ($key, $value) {
                     return $key . '=' . $value;
-                }, $args['query']));
+                }, array_keys($args['query']), array_values($args['query'])));
         }
 
         $id_string = $id ? '/' . $id : '';
