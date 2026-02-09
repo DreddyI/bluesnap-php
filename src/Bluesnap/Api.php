@@ -41,7 +41,7 @@ class Api
         $response = $client->request('GET', $endpoint . $id_string, $args);
 
         if ($response->getStatusCode() === 200) {
-            var_dump($client::getConfig(),$response->getBody()->getContents());
+            var_dump($client->getConfig(),$response->getBody()->getContents());
             die();
             $data = json_decode($response->getBody()->getContents());
 
