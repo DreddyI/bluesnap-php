@@ -4,6 +4,7 @@ namespace tdanielcox\Bluesnap;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
 use tdanielcox\Bluesnap\Exceptions\MissingFieldsException;
 
 class Api
@@ -33,16 +34,21 @@ class Api
         $client = self::getClient();
 
         $args = [];
+        $queryPart = '';
         if ($query_params && is_array($query_params)) {
             $args = ['query' => $query_params];
+            $queryPart = '?' . implode('&', array_map(function ($key, $value) {
+                    return $key . '=' . $value;
+                }, $args['query']));
         }
 
         $id_string = $id ? '/' . $id : '';
-        $response = $client->request('GET', $endpoint . $id_string, $args);
+        $request = new Request('GET', $endpoint . $id_string . $queryPart);
+//        $response = $client->request('GET', $endpoint . $id_string, $args);
+        var_dump($endpoint . $id_string . $queryPart);
+        $response = $client->send($request, $args);
 
         if ($response->getStatusCode() === 200) {
-            var_dump($client->getConfig(),$response->getBody()->getContents());
-            die();
             $data = json_decode($response->getBody()->getContents());
 
             return $data;
