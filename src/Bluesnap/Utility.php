@@ -65,8 +65,7 @@ class Utility
                 return new $class_path($m);
             }, $target);
             if($model === 'Plan')
-            {var_dump($target, $models);die();}
-
+            {var_dump($target_parameter, $data, $data[$target_parameter], $data['plans'],$target, $models);die();}
             return $models;
         }
 
